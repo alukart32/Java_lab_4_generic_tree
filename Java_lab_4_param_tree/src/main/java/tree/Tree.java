@@ -148,12 +148,15 @@ public class Tree<K , V> implements ITree<K, V> {
      }
   }
 
-  public Node getByKey(K key){
+  public K getKey(K key){
       Node tmp = findNodeByKey(root, key);
-      return tmp;
+      if(tmp != null)
+        return tmp.getKey();
+      else return null;
   }
 
-  /**
+
+    /**
    * Comparing keys of Tree's nodes
    *
    * if comparator is null then using compareTo
@@ -285,15 +288,19 @@ public class Tree<K , V> implements ITree<K, V> {
           // if target has a left child then put it's child on target place
           if (target.equals(target.parent.left)) {
               target.parent.left = target.left;
+              target.parent.left.parent  = target.parent;
           } else {
               target.parent.right = target.left;
+              target.parent.left.parent = target.parent;
           }
       } else if (target.right != null) {
           // if target has a left child then put it's child on target place
           if (target.equals(target.parent.right)) {
               target.parent.right = target.right;
+              target.parent.right.parent = target.parent;
           } else {
               target.parent.left = target.right;
+              target.parent.right.parent  = target.parent;
           }
 
       } else {
@@ -334,6 +341,17 @@ public class Tree<K , V> implements ITree<K, V> {
       }
   }
 
+  public int getSize(){
+      return countNodes(root);
+  }
+
+  private int countNodes(Node cur){
+      if(cur == null)
+          return 0;
+
+      return 1 + countNodes(cur.left) + countNodes(cur.right);
+
+  }
   /**
    * Finding a Node by key
    * @param cur     from which Node searching

@@ -1,6 +1,7 @@
 package tree.test;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import some_classes.ClassA;
@@ -43,10 +44,11 @@ public class TreeClassATest {
         tree.put(l, 15);
         tree.put(j, 17);
 
-        tree.print();
+        Assert.assertEquals(i, tree.getKey(i));
+        Assert.assertEquals(c, tree.getKey(c));
+        Assert.assertEquals(j, tree.getKey(j));
 
-        System.out.println();
-
+        Assert.assertEquals(9, tree.getSize());
     }
 
     @Test
@@ -75,12 +77,9 @@ public class TreeClassATest {
 
         tree.remove(h);
 
-        tree.print();
+        Assert.assertEquals(tree.getKey(h), null);
+        Assert.assertNotEquals(h, tree.getKey(h));
 
-        System.out.println();
-
-        tree.remove(e);
-
-        tree.print();
+        Assert.assertEquals(8, tree.getSize());
     }
 }
